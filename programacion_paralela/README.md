@@ -1,6 +1,15 @@
 Programacion Paralela
 =======================================================================================================================
 
+Organización del repositorio
+-----------------------------------------------------------------------------------------------------------------------
+En el repositorio van a encontrar:
+
+- [PDFs](./pdf): Prácticas, syllabus y otras cosas de la materia en PDF.
+- [Docker](./docker): Archivos necesarios para crear un contenedor de Docker con CUDA.
+- [Latex](./latex): Código fuente \LaTeX de los PDFs.
+
+
 Objetivo
 -----------------------------------------------------------------------------------------------------------------------
 El objetivo de la materia Programación Paralela es introducir al alumno en el mundo de la programación paralela, basada
@@ -16,24 +25,37 @@ Para ello se requieren tantos CPUs como GPUs, pero se necesitan lenguajes de pro
 diferentes que las que se utilizan en las CPUs.
 
 
+Docker
+-----------------------------------------------------------------------------------------------------------------------
+Para facilitar la instalación de CUDA y las herramientas necesarias para programar en CUDA, encontrarán un directorio
+[./docker](./docker) con los archivos necesarios para poder crear y correr ejemplos de CUDA dentro de un contenedor de
+Docker.
+
+- [CUDA installation guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/)
+- [CUDA installation guide for Windows](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/)
+- No existen developer tools para MacOS. Se pueden ver aqui las [versiones
+  antiguas](https://developer.nvidia.com/nvidia-cuda-toolkit-developer-tools-mac-hosts) y siempre se puede usar Docker
+  con los containers provistos.
+
+
 ## TODO
 En esta lista pondré todas las cosas que tengo que hacer para la programación paralela.
 
 - [ ] ESCRIBIR
-    - [ ] Objetivo
-    - [ ] Fundamentación
+    - [X] LaTeX
+        - [X] Template
+        - [X] Makefile
+    - [X] Objetivo
+    - [X] Fundamentación
     - [ ] Syllabus
         - [ ] Unidad 1: Introducción
     - [ ] Bibliografía
 
 - [ ] PREPARAR
-    - [ ] LaTeX
-        - [ ] Template
-        - [ ] Makefile
-    - [ ] Docker
-        - [ ] Container CUDA
-            - [ ] Dockerfile
-            - [ ] Makefile
+    - [X] Docker
+        - [X] Container CUDA
+            - [X] Dockerfile
+            - [X] Makefile
     - [ ] Prácticas
         - [ ] Practica 1: Introducción (Chapter 1)
     - [ ] Exámenes

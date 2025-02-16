@@ -1,0 +1,41 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usetikzlibrary{graphs,graphs.standard}
+
+% Esto es para poder hacer cajitas de código con el fondo gris
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{green!60!black},
+    commentstyle=\color{gray},
+    backgroundcolor=\color{gray!05},
+    frame=single,
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    tabsize=2,
+    showstringspaces=false,
+    captionpos=b,
+}
+
+% Sección de definiciones
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+% Caja de colores
+\definecolor{mint}{RGB}{202,251,202}
+\definecolor{yellow}{RGB}{255,255,202}
+\definecolor{red}{RGB}{255,202,202}
