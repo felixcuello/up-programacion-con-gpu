@@ -12,9 +12,9 @@ En el repositorio van a encontrar:
 
 Objetivo
 -----------------------------------------------------------------------------------------------------------------------
-El objetivo de la materia Programación Paralela es introducir al alumno en el mundo de la programación paralela, basada
-en arquitectura de GPUs. Se busca que el alumno adquiera los conocimientos necesarios para poder programar en CUDA, y
-entender la forma en la que se deben abordar los problemas de programación paralela.
+El objetivo de la materia Programación Paralela es introducir al alumno en la programación masívamente paralela basada
+en arquitectura de GPUs (Graphics Processing Units). Se busca que el alumno adquiera los conocimientos necesarios para
+poder programar en CUDA, y entender la forma en la que se deben abordar los problemas de programación paralela.
 
 
 Fundamentación
@@ -23,6 +23,9 @@ Las CPUs han sido desarrolladas para minimizar la latencia y maximizar el rendim
 Sin embargo hay determinadas aplicaciones y algoritmos que sólo pueden ser optimizados si se corren de manera paralela.
 Para ello se requieren tantos CPUs como GPUs, pero se necesitan lenguajes de programación y técnicas de programación
 diferentes que las que se utilizan en las CPUs.
+Estas técnicas de programación se basan en la programación de kernels, que son funciones que se ejecutan en paralelo en
+las GPUs y necesitan de un lenguaje de programación específico como CUDA, y de técnicas de programación y optimización
+específicas para poder aprovechar al máximo las arquitecturas de GPUs paralelas.
 
 
 Docker
@@ -38,7 +41,8 @@ Docker.
   con los containers provistos.
 
 
-## TODO
+# TODO
+-----------------------------------------------------------------------------------------------------------------------
 En esta lista pondré todas las cosas que tengo que hacer para la programación paralela.
 
 - [ ] ESCRIBIR

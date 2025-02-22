@@ -1,17 +1,30 @@
-\documentclass[10pt]{article}
+% \documentclass[10pt, twocolumn, a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[backend=biber, style=ieee]{biblatex}                        % To include the bibliography
+\usepackage[left=2cm, right=2cm, top=2.5cm, bottom=2.5cm]{geometry}     % To set the margins
 \usepackage[noend]{algpseudocode}
-\usepackage{algorithm}
-\usepackage{amsfonts}
-\usepackage{amsmath}
-\usepackage{hyperref}
-\usepackage{listings}
-\usepackage{tcolorbox}
-\usepackage{tikz}
-\usepackage{titlesec}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}                                              % For coloring cells
+
+\usepackage{algorithm}                                                  % To include algorithms
+\usepackage{amsfonts}                                                   % To include math fonts:ToggleTerm direction=float
+\usepackage{amsmath}                                                    % To include Mathematic symbols
+\usepackage{authblk}                                                    % To format author affiliations
+\usepackage{caption}                                                    % For caption spacing
+\usepackage{float}                                                      % To place figures where you want them
+\usepackage{graphicx}                                                   % To include images
+\usepackage{hyperref}                                                   % To include hyperlinks
+\usepackage{lipsum}                                                     % TODO: remove this
+\usepackage{listings}                                                   % To include code
+\usepackage{tabularx}                                                   % For equal-width columns
+\usepackage{tcolorbox}                                                  % To make colored boxes
+\usepackage{tikz}                                                       % To draw graphs
+\usepackage{titlesec}                                                   % To format section titles
+\usepackage{xcolor}                                                     % To define colors
+
 \usetikzlibrary{graphs,graphs.standard}
+
+\addbibresource{./references.bib}
 
 % Esto es para poder hacer cajitas de código con el fondo gris
 \lstset{
