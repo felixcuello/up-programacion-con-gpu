@@ -6,6 +6,7 @@ compile_latex:
 	@for file in *.tex; \
 		do \
 			pdflatex -shell-escape $$file; \
+			biber $$(basename $$file .tex); \
 			pdflatex -shell-escape $$file; \
 		done;
 	@mv *.pdf ../../pdf
