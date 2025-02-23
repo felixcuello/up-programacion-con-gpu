@@ -2,6 +2,11 @@ all: compile_latex clean
 
 .PHONY: all clean install_latex install
 
+current:
+	pdflatex -shell-escape 02.teorica___computacion_de_datos_paralelamente.tex
+	biber 02.teorica___computacion_de_datos_paralelamente
+	pdflatex -shell-escape 02.teorica___computacion_de_datos_paralelamente.tex
+
 compile_latex:
 	@for file in *.tex; \
 		do \

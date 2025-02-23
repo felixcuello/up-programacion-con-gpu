@@ -1,0 +1,83 @@
+\input{../shared.tex/common_headers.tex}
+
+\begin{document}
+
+\begin{center}
+    \LARGE\textbf{Programación Paralela} \\
+    \Large{Teórica 02 - Introducción a CUDA} \\
+    \normalsize{Segundo Semestre, 2025} \\
+    \vspace{1em}
+    \hrule
+\end{center}
+
+\input{../shared.tex/common_footers.tex}
+
+\section*{Introducción}
+
+Para los ejercicios vamos a hacer CUDA C que nos permite escribir programas paralelos escalables en sistemas paralelos
+heterogéneos. CUDA extiende el lenguaje de programación C con una sintaxis mínima que permite realizar tanto sistemas
+conteniendo CPUs o GPUs.
+
+Cuando en el software moderno las aplicaciones se ejecutan \textit{lento}, el problema usualmente suele ser que hay
+demasiados datos para ser procesados. Por ejemplo casos como el procesamiento de imágenes o videos, simulación de
+dinámica de fluidos, manejo de sistemas complejos como (líneas aéreas), o incluso cosas mucho más sencillas como
+convertir una imagen de pixels a escala de grises, se pueden fraccionar en tareas más pequeñas que pueden ser ejecutadas
+de manera independiente.
+
+\begin{tcolorbox}[colback=yellow,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
+  \textbf{Paralelismo de tareas vs. paralelismo de datos} \\
+
+  El paralelismo de tareas se refiere a la ejecución de múltiples tareas (no necesariamente las mismas) al mismo tiempo.
+  Por otro lado, el paralelismo de datos se refiere a la ejecución de la misma tarea en múltiples datos al mismo tiempo.
+\end{tcolorbox}
+
+
+\section*{Convertir una Imagen a Escala de Grises}
+
+El procesamiento de imágenes es un clásico ejemplo de computación paralela y lo utilizaremos mucho durante la materia
+para ejemplificar conceptos. En este caso vamos a ver cómo convertir una imagen a escala de grises.
+
+Pero antes de comenzar tenemos que saber cómo se representa una imagen en la computadora. Esencialmente una imagen se
+puede representar como una matriz de tuplas $(R, G, B)$ donde $R$, $G$ y $B$ son los valores de los colores rojo, verde
+y azul respectivamente. Cada uno de estos valores puede ir desde 0 a 255 y representan la intensidad de cada color en un
+pixel. Esa combinación se encuentra dentro del triángulo AdobeRGB (ver Figura \ref{fig:adobe_rgb}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=200px]{./images/adobe_rgb.png}
+  \caption{Triángulo AdobeRGB}
+  \label{fig:adobe_rgb}
+\end{figure}
+
+Estos valores $R$, $G$ y $B$ representan los \textit{canales} y para convertir estos canales a escala de grises se debe
+utilizar una fórmula, ya que hay que decidir cuál va a ser la intensidad del pixel en escala de grises. Esto se hace
+combinando los valores de los canales de color de alguna manera. Lógicamente hay muchas formas de convertir estos
+canales a escala de grises, por ejemplo podríamos tomar sólo el valor del canal $G$, pero la imagen sólo se vería
+representada en una escala de grises para el canal verde, lo cual no sería muy verídico. Sin embargo si lo pensamos no
+es trivial cuál es la fórmula para traducir una imagen de color a escala de grises. \\
+
+\begin{tcolorbox}[colback=mint,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
+  \textbf{Fórmulas para convertir a escala de grises} \\
+
+  \begin{itemize}
+    \item \textbf{Promedio}: $I = \frac{R + G + B}{3}$
+    \item \textbf{Luminosidad}: $I = 0.21R + 0.72G + 0.07B$
+    \item \textbf{Desaturación}: $I = \frac{max(R, G, B) + min(R, G, B)}{2}$
+  \end{itemize}
+\end{tcolorbox}
+
+En este caso usaremos la fórmula de \textit{luminosidad} para convertir la imagen a escala de grises que es un promedio
+pesado de los canales de color que representa la percepción humana de la luminosidad, pero como dijimos no es la única
+forma y cambiar esta fórmula puede dar diferentes resultados que podrían considerarse como "filtros de imagen" (¡podés
+probarlo luego!).
+
+
+\section*{Estructura de un programa en CUDA C}
+
+La estructura de un programa en CUDA C es similar a un programa en C, lo que refleja la naturaleza heterogénea donde
+existe un \textit{host} (CPU) y uno o más \textit{devices} (GPU) en la computadora. El código fuente CUDA tiene una
+mezcla de ambos códigos, uno que se ejecuta en el host y otro en el device. Por defecto, todo el código se ejecuta en el
+host. Las funciones declaradas para ser corridas en los \textit{devices} son aquellas que exhibirán una gran cantidad de
+paralelismo de datos.
+
+\end{document}
