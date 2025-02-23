@@ -5,9 +5,10 @@ Organización del repositorio
 -----------------------------------------------------------------------------------------------------------------------
 En el repositorio van a encontrar:
 
-- [PDFs](./pdf): Prácticas, syllabus y otras cosas de la materia en PDF.
+- [PDFs](./pdf): Prácticas, syllabus y material obligatorio de la materia en PDF.
 - [Docker](./docker): Archivos necesarios para crear un contenedor de Docker con CUDA.
 - [Latex](./latex): Código fuente \LaTeX de los PDFs.
+- [Material Extra](./material_extra): Material no obligatorio adicional de la materia (para que tengas como referencia)
 
 
 Objetivo

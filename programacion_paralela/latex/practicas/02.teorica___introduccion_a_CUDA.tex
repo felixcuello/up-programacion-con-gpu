@@ -10,13 +10,13 @@
     \hrule
 \end{center}
 
-\input{../shared.tex/common_footers.tex}
-
 \section*{Introducción}
 
 Para los ejercicios vamos a hacer CUDA C que nos permite escribir programas paralelos escalables en sistemas paralelos
-heterogéneos. CUDA extiende el lenguaje de programación C con una sintaxis mínima que permite realizar tanto sistemas
-conteniendo CPUs o GPUs.
+donde conviven tanto CPUs como GPUs. \textbf{En este tipo de sistemas donde hay porciones de código que pueden
+ejecutarse en paralelo, pero que están gobernadas por un código secuencial que corre en la CPU, los llamaremos
+\textit{heterogéneos}.} CUDA extiende el lenguaje de programación C con una sintaxis mínima que permite realizar tanto
+sistemas conteniendo CPUs o GPUs.
 
 Cuando en el software moderno las aplicaciones se ejecutan \textit{lento}, el problema usualmente suele ser que hay
 demasiados datos para ser procesados. Por ejemplo casos como el procesamiento de imágenes o videos, simulación de
@@ -74,10 +74,20 @@ probarlo luego!).
 
 \section*{Estructura de un programa en CUDA C}
 
-La estructura de un programa en CUDA C es similar a un programa en C, lo que refleja la naturaleza heterogénea donde
+La estructura de un programa en CUDA C es similar a un programa en C, lo que refleja su naturaleza heterogénea donde
 existe un \textit{host} (CPU) y uno o más \textit{devices} (GPU) en la computadora. El código fuente CUDA tiene una
 mezcla de ambos códigos, uno que se ejecuta en el host y otro en el device. Por defecto, todo el código se ejecuta en el
 host. Las funciones declaradas para ser corridas en los \textit{devices} son aquellas que exhibirán una gran cantidad de
 paralelismo de datos.
+
+El código con estas extensiones de CUDA tiene que ser compilado con el compilador de NVIDIA, \texttt{nvcc}, que es un
+wrapper para el compilador de C, \texttt{gcc}. El compilador de NVIDIA se encarga de separar el código que se ejecuta en
+el host del que se ejecuta en el device y de compilarlo con el compilador de C. El código identificado con las
+\textit{keywords} (palabras reservadas) de CUDA para las funciones paralelas se denominan \textit{kernels}. Estos
+kernels son funciones que están asociadas a estructuras de datos y que van a ser ejecutadas en paralelo por GPUs. En las
+situaciones donde no haya una GPU disponible, el código de todas formas se ejecutará en una CPU (uno podría incluso
+ejecuar el kernel en CPU utilizando herramientas como MCUDA) \cite{sutter2005}.
+
+\input{../shared.tex/common_footers.tex}
 
 \end{document}
