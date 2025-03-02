@@ -5,42 +5,49 @@
 \begin{center}
     \LARGE\textbf{Programación Paralela} \\
     \Large{Teórica 02 - Introducción a CUDA} \\
-    \normalsize{Segundo Semestre, 2025} \\
+    \normalsize{\currentsemester, \currentyear} \\
     \vspace{1em}
     \hrule
 \end{center}
 
-\section*{Introducción}
+\setcounter{section}{2}
 
-Para los ejercicios vamos a hacer CUDA C que nos permite escribir programas paralelos escalables en sistemas paralelos
-donde conviven tanto CPUs como GPUs. \textbf{En este tipo de sistemas donde hay porciones de código que pueden
-ejecutarse en paralelo, pero que están gobernadas por un código secuencial que corre en la CPU, los llamaremos
-\textit{heterogéneos}.} CUDA extiende el lenguaje de programación C con una sintaxis mínima que permite realizar tanto
-sistemas conteniendo CPUs o GPUs.
+\subsection{Introducción}
+
+Como dijimos en la práctica anterior, la computación paralela es una técnica que permite realizar cálculos de manera
+simultánea en múltiples procesadores. Para los ejercicios vamos a utilizar CUDA C que nos permite escribir programas
+paralelos escalables en sistemas donde conviven tanto CPUs como GPUs. \textbf{En este tipo de sistemas donde hay
+porciones de código que pueden ejecutarse en paralelo, pero que están gobernadas por un código secuencial que corre en
+la CPU, los llamaremos \textit{sistemas heterogéneos}}. CUDA extiende el lenguaje de programación C con una sintaxis
+mínima que permite tener código secuencial, gobernado por la CPU, y código que puede ser ejecutado en paralelo en GPUs.
 
 Cuando en el software moderno las aplicaciones se ejecutan \textit{lento}, el problema usualmente suele ser que hay
-demasiados datos para ser procesados. Por ejemplo casos como el procesamiento de imágenes o videos, simulación de
-dinámica de fluidos, manejo de sistemas complejos como (líneas aéreas), o incluso cosas mucho más sencillas como
-convertir una imagen de pixels a escala de grises, se pueden fraccionar en tareas más pequeñas que pueden ser ejecutadas
-de manera independiente.
+demasiados datos para ser procesados. Por ejemplo en el procesamiento de imágenes o videos, la simulación de dinámica de
+fluidos, el manejo de sistemas complejos como (líneas aéreas), o incluso cosas mucho más sencillas como convertir una
+imagen de pixels a escala de grises. Estas tareas se pueden fraccionar en tareas más pequeñas que pueden ser ejecutadas
+de manera independiente y paralela.
 
-\begin{tcolorbox}[colback=yellow,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
+\begin{tcolorbox}[colback=mint,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
   \textbf{Paralelismo de tareas vs. paralelismo de datos} \\
 
-  El paralelismo de tareas se refiere a la ejecución de múltiples tareas (no necesariamente las mismas) al mismo tiempo.
-  Por otro lado, el paralelismo de datos se refiere a la ejecución de la misma tarea en múltiples datos al mismo tiempo.
+  El paralelismo de tareas, se refiere a la ejecución de múltiples tareas (no necesariamente las mismas) al mismo tiempo.
+  Mientras que el paralelismo de datos, se refiere a la ejecución de la misma tarea con datos diferentes al mismo tiempo.
 \end{tcolorbox}
 
 
-\section*{Convertir una Imagen a Escala de Grises}
+\subsection{Convertir una Imagen a Escala de Grises}
 
-El procesamiento de imágenes es un clásico ejemplo de computación paralela y lo utilizaremos mucho durante la materia
-para ejemplificar conceptos. En este caso vamos a ver cómo convertir una imagen a escala de grises.
+El procesamiento de imágenes es un clásico ejemplo de computación paralela y comenzaremos la introducción a CUDA viendo
+un ejemplo de procesamiento de imágenes para ejemplificar los primeros conceptos. En este caso vamos a ver cómo
+convertir una imagen a escala de grises.
 
-Pero antes de comenzar tenemos que saber cómo se representa una imagen en la computadora. Esencialmente una imagen se
-puede representar como una matriz de tuplas $(R, G, B)$ donde $R$, $G$ y $B$ son los valores de los colores rojo, verde
-y azul respectivamente. Cada uno de estos valores puede ir desde 0 a 255 y representan la intensidad de cada color en un
-pixel. Esa combinación se encuentra dentro del triángulo AdobeRGB (ver Figura \ref{fig:adobe_rgb}).
+\subsubsection{Representación de una imagen en la computadora}
+
+Antes de comenzar a escribir cualquier tipo de código, tenemos que saber cómo se representa una imagen en la
+computadora. Esencialmente una imagen se representa como una matriz de tuplas $(R, G, B)$ donde $R$, $G$ y $B$ son los
+valores de los colores (canales) rojo, verde y azul respectivamente. Cada uno de estos canales tiene un valor que va
+desde 0 ($0x00$) a 255 ($0xFF$) y representan la intensidad de cada color de un pixel en una imagen. Existen $256^3$
+colores posibles y estos colores se representan dentro del triángulo AdobeRGB (ver Figura \ref{fig:adobe_rgb}).
 
 \begin{figure}[H]
   \centering
@@ -49,15 +56,18 @@ pixel. Esa combinación se encuentra dentro del triángulo AdobeRGB (ver Figura 
   \label{fig:adobe_rgb}
 \end{figure}
 
-Estos valores $R$, $G$ y $B$ representan los \textit{canales} y para convertir estos canales a escala de grises se debe
-utilizar una fórmula, ya que hay que decidir cuál va a ser la intensidad del pixel en escala de grises. Esto se hace
-combinando los valores de los canales de color de alguna manera. Lógicamente hay muchas formas de convertir estos
-canales a escala de grises, por ejemplo podríamos tomar sólo el valor del canal $G$, pero la imagen sólo se vería
-representada en una escala de grises para el canal verde, lo cual no sería muy verídico. Sin embargo si lo pensamos no
-es trivial cuál es la fórmula para traducir una imagen de color a escala de grises. \\
+Como dijimos, estos valores de $R$, $G$ y $B$ representan los \textit{canales} y para convertir estos canales a escala
+de grises se debe utilizar una fórmula, ya que hay que decidir cuál va a ser la intensidad final del pixel en escala de
+grises en la imagen blanco y negro. Esto se hace realizando una combinación lineal de los valores de los canales de
+color de alguna manera y, lógicamente hay muchas formas de convertir estos canales a escala de grises. Por ejemplo
+podríamos tomar sólo el valor del canal $G$ (verde), haciendo la combinación lineal $pixel_{gris} = R \cdot 0 + G \cdot
+1 + B \cdot 0$. De esta manera la imagen sólo se vería representada por ese canal, lo cual no sería muy verídico,
+ya que el ojo humano percibe la intensidad de los 3 canales. Como podrán imaginar, hay muchas formas de convertir una
+imagen a escala de grises \footnote{¡Podrían probar con diferentes fórmulas y ver cómo se ve la imagen!, hay $256^3$
+combinaciones posibles.}, pero hay algunas que son más comunes que otras.
 
 \begin{tcolorbox}[colback=mint,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
-  \textbf{Fórmulas para convertir a escala de grises} \\
+  \textbf{Algunas fórmulas comunes para convertir a escala de grises}, son las siguientes: \\
 
   \begin{itemize}
     \item \textbf{Promedio}: $I = \frac{R + G + B}{3}$
@@ -66,27 +76,55 @@ es trivial cuál es la fórmula para traducir una imagen de color a escala de gr
   \end{itemize}
 \end{tcolorbox}
 
-En este caso usaremos la fórmula de \textit{luminosidad} para convertir la imagen a escala de grises que es un promedio
-pesado de los canales de color que representa la percepción humana de la luminosidad, pero como dijimos no es la única
-forma y cambiar esta fórmula puede dar diferentes resultados que podrían considerarse como "filtros de imagen" (¡podés
-probarlo luego!).
+Para nuestro ejemplo, vamos a usar la fórmula de \textit{luminosidad} para convertir la imagen a escala de grises que es
+un promedio pesado de los canales de color, y que representa la percepción humana de la luminosidad, pero como dijimos
+no es la única forma y cambiar esta fórmula puede dar diferentes resultados que podrían considerarse como "filtros de
+imagen".
 
-
-\section*{Estructura de un programa en CUDA C}
+\subsubsection{Estructura de un programa en CUDA C}
 
 La estructura de un programa en CUDA C es similar a un programa en C, lo que refleja su naturaleza heterogénea donde
-existe un \textit{host} (CPU) y uno o más \textit{devices} (GPU) en la computadora. El código fuente CUDA tiene una
-mezcla de ambos códigos, uno que se ejecuta en el host y otro en el device. Por defecto, todo el código se ejecuta en el
-host. Las funciones declaradas para ser corridas en los \textit{devices} son aquellas que exhibirán una gran cantidad de
-paralelismo de datos.
+existe un \textit{host} (CPU) y uno o más \textit{devices} (GPUs) en la computadora. El código fuente CUDA tiene una
+mezcla de ambos códigos, uno que se ejecuta en el host, y otro en los devices. Por defecto, todo el código se ejecuta en
+el host, aunque vamos a declarar funciones de una forma especial para que puedan ser corridas en los \textit{devices}.
 
 El código con estas extensiones de CUDA tiene que ser compilado con el compilador de NVIDIA, \texttt{nvcc}, que es un
-wrapper para el compilador de C, \texttt{gcc}. El compilador de NVIDIA se encarga de separar el código que se ejecuta en
-el host del que se ejecuta en el device y de compilarlo con el compilador de C. El código identificado con las
-\textit{keywords} (palabras reservadas) de CUDA para las funciones paralelas se denominan \textit{kernels}. Estos
-kernels son funciones que están asociadas a estructuras de datos y que van a ser ejecutadas en paralelo por GPUs. En las
-situaciones donde no haya una GPU disponible, el código de todas formas se ejecutará en una CPU (uno podría incluso
-ejecuar el kernel en CPU utilizando herramientas como MCUDA) \cite{sutter2005}.
+wrapper para el compilador de C, \texttt{gcc}. El compilador de NVIDIA se encarga de: separar el código que se ejecuta en
+el host, separar el código que se ejecuta en el device, y de compilarlo con el compilador de C. \textbf{El código
+identificado con las \textit{keywords} (palabras reservadas) de CUDA para las funciones paralelas se denominan
+\textit{kernels}}. Estos kernels son funciones que están asociadas a estructuras de datos y que van a ser ejecutadas en
+paralelo por GPUs. En las situaciones donde no haya una GPU disponible, el código de todas formas se ejecutará en una
+CPU (uno podría incluso ejecuar el kernel en una CPU utilizando herramientas como MCUDA) \cite{sutter2005}.
+
+La ejecuciónm de un programa en CUDA se ilustra en la Figura \ref{fig:execution_cuda}, la ejecución comienza con el
+código del host (CPU) y cuando se llama a una función kernel (código paralelo del dispositivo) es ejecutada por un gran
+número de threads en un dispositivo. Todos los threads que son generados por un kernel son colectivamente llamados un
+\textit{grid}. Estos threads son el vehículo principal de la ejecución paralela en una plataforma CUDA. Cuando todos los
+threads de un kernel completan su ejecución, el grid correspondiente termina, y la ejecución continúa en el host hasta
+que otro kernel es lanzado. Notar que la Figura \ref{fig:execution_cuda} muestra un modelo simplificado donde la
+ejecución del código de la CPU y la GPU no se superponen, pero en muchas de las aplicaciones heterogéneas, la CPU y las
+GPUs para aprovechar al máximo ambos recursos.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=400px]{./images/execution_cuda.png}
+  \caption{Ejecución de un programa en CUDA}
+  \label{fig:execution_cuda}
+\end{figure}
+
+\begin{tcolorbox}[colback=yellow,colframe=yellow!75!black,arc=0pt,outer arc=0pt]
+  \textbf{Threads} \\
+
+  La ejecución de un kernel genera un gran número de threads para explotar el paralelismo de datos. En el caso de la
+  conversión de una imagen color a escala de grises cada thread podría ser utilizado para computar un pixel de la imagen
+  de salida. En este caso, el número de threads que serán generados por el kernel es igual al número de pixels en la
+  imagen. Para imágenes grandes, un gran número de threads serán generados. En la práctica, cada thread puede procesar
+  múltiples pixels para eficiencia. Los programadores de CUDA pueden asumir que estos threads toman muy pocos ciclos de
+  reloj para ser generados y programados debido al soporte eficiente del hardware. Esto es en contraste con los threads
+  tradicionales de la CPU que típicamente toman miles de ciclos de reloj para ser generados y programados.
+\end{tcolorbox}
+
+\subsection{}
 
 \input{../shared.tex/common_footers.tex}
 
