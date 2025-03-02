@@ -16,25 +16,8 @@
 \section*{Introducción}
 \label{sec:introduccion}
 
-<<<<<<< Updated upstream
-||||||| Stash base
-Como regla general queremos que nuestros algoritmos sean realizables y por \textit{realizables} queremos decir la
-capacidad de resolver las instancias deseadas de un problema dentro de nuestros recursos disponibles. En la práctica, la
-factibilidad es muy dependiente del contexto y no es particularmente \textit{portable} (portátil) entre diferentes
-problemas y situaciones. Un principio común se mantiene en casi todas las situaciones: \textbf{una tasa de crecimiento
-exponencial en el consumo de algún recurso limita la aplicación del uso de ese método a todas las instancias, excepto a
-las más pequeñas}. En otras palabras, si nuestros algoritmos son exponenciales en el tamaño de la entrada, no importa
-cuántos recursos tengamos, no podremos resolver instancias grandes del problema. Por lo tanto, la factibilidad ha
-llegado a significar que la tasa de crecimiento del recurso está acotada por un una complejidad polinomial en el tamaño
-de la entrada. Esto nos da la noción común de que un problema tiene una solución secuencial factible sólo si tenemos un
-algoritmo de tiempo polinomial, es decir, sólo si cualquier instancia de tamaño n del problema se puede resolver en
-tiempo $n^{O(1)}$. Aunque ampliamente reconocido como muy simplista, la dicotomía entre algoritmos polinomiales y no
-polinomiales ha demostrado ser un discriminador poderoso entre aquellos cálculos que son factibles en la práctica y
-aquellos que no lo son. \cite{greenlaw1995}
-=======
 En esta materia vamos a estudiar una técnica de programación llamada \textbf{programación paralela}, que nos permite
 escribir programas que pueden ser ejecutados en diferentes unidades de procesamiento al mismo tiempo.
->>>>>>> Stashed changes
 
 Los microprocesadores que tenemos en nuestras computadoras personales y celulares se basan en una unidad central de
 procesamiento (CPU) que ejecuta un cierto número de \textit{threads} (hilos) en paralelo, que ejecutan un código
@@ -113,7 +96,7 @@ complejidad de $O(n^2)$, pero si utilizamos un algoritmo de ordenamiento más ef
 \cdot \; \log \; n)$. Ambos algoritmos resuelven el mismo problema (ordernar un array), pero uno es mucho más eficiente
 que el otro. A veces, descubrir un algoritmo más eficiente no es tan fácil.
 
-\textbf{El n es la cantidad de elementos que tenemos como input de nuestro algoritmo}. Con lo cual, un algoritmo que
+\textbf{El $n$ es la cantidad de elementos que tenemos como input de nuestro algoritmo}. Con lo cual, un algoritmo que
 tiene una entrada de tamaño $n$ y se ejecuta con una cierta función de tiempo $f(n)$, diremos que el algoritmo se
 comporta con una complejidad asintótica de $O(g(n))$ si existe una constante $C$ y un valor $n_0$ tal que el valor
 absoluto de $f(n)$ es menor o igual a $C$ por el valor absoluto de $g(n)$ para todo $n$ mayor a $n_0$.
@@ -176,60 +159,10 @@ todos.
 
 \section*{Desafíos en la programación paralela}
 
-Podríamos pensar entonces que la programación paralela puede ser una solución inherente para resolver todos los
-problemas de rendimiento y debería utilizarse siempre. Aunque como vimos con la ley de Amdahl, no todos los problemas
-son $100\%$ paralelizables, y en general sólo podremos intentar paralelizar una parte de la aplicación.
+Podríamos pensar entonces que la programación paralela puede ser una solución general para resolver todos los problemas
+de \textit{performance} y debería utilizarse siempre. Aunque como vimos con la ley de Amdahl, no todos los problemas son
+$100\%$ paralelizables, y en general sólo podremos intentar paralelizar una parte de la aplicación.
 
-<<<<<<< Updated upstream
-Sin embargo, por un lado es complicado diseñar algoritmos paralelos que tengan el mismo nivel de complejidad
-computacional que los algoritmos secuenciales. Por el otro lado la programación paralela tiene límites de velocidad de
-acceso a memoria. La performance de los algoritmos paralelos son muy sensibles a los datos de entrada, ya que
-esencialmente la parelización se basa en el procesamiento de datos de manera paralela. Por último, pero no menos
-importante, los algoritmos paralelos suelen expresarse de manera de recurrencias, lo cual requiere que se piensen los
-diferentes problemas de formas no intuitivas.
-
-||||||| Stash base
-Sin embargo, por un lado es complicado diseñar algoritmos paralelos que tengan el mismo nivel de complejidad
-computacional que los algoritmos secuenciales. Por el otro lado la programación paralela tiene límites de velocidad de
-acceso a memoria. La performance de los algoritmos paralelos son muy sensibles a los datos de entrada, ya que
-esencialmente la parelización se basa en el procesamiento de datos de manera paralela. Por último, pero no menos
-importante, los algoritmos paralelos suelen expresarse de manera de recurrencias, lo cual requiere que se piensen los
-diferentes problemas de formas no intuitivas.
-
-Pero los problemas antes mencionados sólo son problemas técnicos que se podrían resolver con el tiempo y la suficiente
-dedicación, pero podríamos preguntarnos si \textbf{¿todos los problemas son paralelizables?}.
-
-\subsection*{Los límites de la programación paralela}
-
-Una rama de la teoría de la complejidad computacional se dedica a identificar los problemas más difíciles en la clase P,
-que son los problemas que pueden ser resueltos en tiempo polinomial. Estos problemas son de interés porque parecen
-carecer de soluciones altamente paralelas. Es decir, los diseñadores de algoritmos han fallado en encontrar algoritmos
-NC, soluciones paralelas altamente factibles que toman tiempo polinomial en el logaritmo del tamaño del problema
-mientras usan sólo un número polinomial de procesadores. En consecuencia, la promesa de la computación paralela, es
-decir, que aplicar más procesadores a un problema puede acelerar en gran medida su solución, parece ser rota por toda la
-clase de problemas P-completo. Esto se puede escribir como $P = NC$.
-
-En la teoría de complejidad computacional, P es una clase de complejidad que contiene todos los problemas de decisión
-que pueden ser resueltos por una máquina de Turing determinista en tiempo polinomial. Sin embargo,
-\href{https://en.wikipedia.org/wiki/Nick_Pippenger}{Nicholas Pippenger} realizó una investigación exhaustiva sobre
-circuitos con profundidad polilogarítmica y tamaño polinomial y sugirió una interesante clase de complejidad a estudiar
-que sería la clase de problemas solucionables por máquinas paralelas en tiempo polilogarítmico \footnote{Un problema es
-polilogarítmico si su complejidad es $O((\log n)^k)$ para algún $k$} usando un número polinomial de procesadores. Esta
-clase se conoce como \textbf{NC} (por \textit{Nick's class}). \cite{stockmeyer1987}
-
-La clase P se puede pensar como los problemas tratables (tesis de Cobham), por lo que NC se puede pensar como los
-problemas que se pueden resolver eficientemente en una computadora paralela. NC es un subconjunto de P porque los
-cálculos paralelos polilogarítmicos se pueden simular mediante cálculos secuenciales polinomiales. Pero no se sabe si
-NC = P, pero la mayoría de los investigadores sospechan que esto es falso, lo que significa que probablemente hay
-algunos problemas tratables que son "intrínsecamente secuenciales" y no se pueden acelerar significativamente utilizando
-paralelismo. Así como la clase NP-completo se puede pensar como "probablemente intratable", así que la clase P-completo,
-cuando se utilizan reducciones NC, se puede pensar como "probablemente no paralelizable" o "probablemente
-intrínsecamente secuencial".
-
-\textbf{Con lo cual la respuesta a la pregunta de si todos los problemas son paralelizables es que NO}, hay ciertos
-problemas que son intrínsecamente secuenciales y no se pueden paralelizar.
-
-=======
 El primer problema, es que es difícil diseñar algoritmos paralelos, ya que requiere pensar los problemas de formas
 anti-intuitivas que, muchas veces, no son sencillas de resolver para que tengan el mismo nivel de complejidad
 computacional que los algoritmos secuenciales. La performance de los algoritmos paralelos son muy sensibles a los datos
@@ -266,12 +199,11 @@ $NC \stackrel{?}{=} P$, pero \textbf{la mayoría de los investigadores sospechan
 probablemente hay algunos problemas tratables que son \textbf{"intrínsecamente secuenciales"} y no se pueden acelerar
 significativamente utilizando paralelismo. Así como la clase NP-completo se puede pensar como "probablemente
 intratable", así que \textbf{la clase P-completo, cuando se utilizan reducciones NC, se puede pensar como "probablemente
-no paralelizable" o "probablemente \textit{intrínsecamente secuencial}"}.
+no paralelizable" o "probablemente \textit{intrínsecamente secuencial}"}. \\
 
-Con lo cual, \textbf{la respuesta a la pregunta de si todos los problemas son paralelizables es que NO, ya que hay
-ciertos problemas que son intrínsecamente secuenciales y no se pueden paralelizar}.
+Con lo cual, la respuesta a la pregunta de si todos los problemas son paralelizables es que \textbf{NO, no todos los
+problemas son paralelizables ya que hay ciertos problemas que son intrínsecamente secuenciales}.
 
->>>>>>> Stashed changes
 \section*{Modelos y Lenguajes de Programación Paralela}
 
 En el pasado hubo muchos lenguajes de programación que fueron propuestos para abordar el problema de la programación
