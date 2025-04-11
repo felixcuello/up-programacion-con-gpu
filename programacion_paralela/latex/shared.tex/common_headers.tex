@@ -23,6 +23,7 @@
 \usepackage{xcolor}                                                     % To define colors
 
 \usetikzlibrary{graphs,graphs.standard}
+\usetikzlibrary{positioning}
 
 \addbibresource{./references.bib}
 
@@ -44,6 +45,9 @@
     captionpos=b,
 }
 
+% Para poder hacer flechas
+\usetikzlibrary{shapes, arrows}
+
 % Sección de definiciones
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
@@ -52,3 +56,10 @@
 \definecolor{mint}{RGB}{202,251,202}
 \definecolor{yellow}{RGB}{255,255,202}
 \definecolor{red}{RGB}{255,202,202}
+
+% Variables globales para el documento
+\newcommand{\currentsemester}{Segundo Semestre}
+\newcommand{\currentyear}{2025}
+
+% Esto es para poder agregar comentarios al código
+\newcommand{\comentario}[1]{\State \textcolor{gray}{\quad // #1}}

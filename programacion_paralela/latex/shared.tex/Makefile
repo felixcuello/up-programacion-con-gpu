@@ -2,6 +2,11 @@ all: compile_latex clean
 
 .PHONY: all clean install_latex install
 
+current:
+	pdflatex -shell-escape 02.teorica___introduccion_a_CUDA.tex
+	biber 02.teorica___introduccion_a_CUDA
+	pdflatex -shell-escape 02.teorica___introduccion_a_CUDA.tex
+
 compile_latex:
 	@for file in *.tex; \
 		do \
@@ -13,30 +18,10 @@ compile_latex:
 
 clean:
 	@echo "Cleaning up LaTeX intermediate files..."
-	@find . -type f -name '*.aux' -delete
-	@find . -type f -name '*.bbl' -delete
-	@find . -type f -name '*.bcf' -delete
-	@find . -type f -name '*.blg' -delete
-	@find . -type f -name '*.blx.bib' -delete
-	@find . -type f -name '*.fdb_latexmk' -delete
-	@find . -type f -name '*.fls' -delete
-	@find . -type f -name '*.lof' -delete
-	@find . -type f -name '*.log' -delete
-	@find . -type f -name '*.lol' -delete
-	@find . -type f -name '*.lot' -delete
-	@find . -type f -name '*.out' -delete
-	@find . -type f -name '*.pyg' -delete
-	@find . -type f -name '*.run.xml' -delete
-	@find . -type f -name '*.synctex.gz' -delete
-	@find . -type f -name '*.toc' -delete
-	@find . -type f -name '*.acn' -delete
-	@find . -type f -name '*.glo' -delete
-	@find . -type f -name '*.ist' -delete
-	@find . -type f -name '*.glsdefs' -delete
-	@find . -type f -name '*.acr' -delete
-	@find . -type f -name '*.alg' -delete
-	@find . -type f -name '*.glg' -delete
-	@find . -type f -name '*.gls' -delete
+	@for extension in aux bbl bcf blg blx.bib fdb_latexmk fls lof log lol lot out pyg run.xml synctex.gz toc acn glo ist glsdefs acr alg glg gls; \
+		do \
+			find . -type f -name "*.$$extension" -delete; \
+		done;
 
 install_latex: # Only for OSX
 	brew install --cask mactex
