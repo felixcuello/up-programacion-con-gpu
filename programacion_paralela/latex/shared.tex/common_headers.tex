@@ -11,6 +11,7 @@
 \usepackage{amsmath}                                                    % To include Mathematic symbols
 \usepackage{authblk}                                                    % To format author affiliations
 \usepackage{caption}                                                    % For caption spacing
+\usepackage{enumitem}                                                   % To customize lists (items like i, ii, iii, iv)
 \usepackage{float}                                                      % To place figures where you want them
 \usepackage{graphicx}                                                   % To include images
 \usepackage{hyperref}                                                   % To include hyperlinks
@@ -30,19 +31,20 @@
 % Esto es para poder hacer cajitas de código con el fondo gris
 \lstset{
     language=C++,
-    basicstyle=\ttfamily\small,
+    basicstyle=\ttfamily\footnotesize,
     keywordstyle=\color{blue}\bfseries,
     stringstyle=\color{green!60!black},
     commentstyle=\color{gray},
     backgroundcolor=\color{gray!05},
     frame=single,
     numbers=left,
-    numberstyle=\small,
+    numberstyle=\footnotesize,
     stepnumber=1,
     numbersep=10pt,
     tabsize=2,
     showstringspaces=false,
     captionpos=b,
+    breaklines=true,
 }
 
 % Para poder hacer flechas
@@ -62,4 +64,4 @@
 \newcommand{\currentyear}{2025}
 
 % Esto es para poder agregar comentarios al código
-\newcommand{\comentario}[1]{\State \textcolor{gray}{\quad // #1}}
+\newcommand{\comentario}[1]{\textcolor{gray}{// #1}}

@@ -1,0 +1,158 @@
+\input{../shared.tex/common_headers.tex}
+
+\begin{document}
+
+\begin{center}
+    \LARGE\textbf{Programación Paralela} \\
+    \Large{Práctica 02 - Introducción a CUDA} \\
+    \normalsize{\currentsemester, \currentyear} \\
+    \vspace{1em}
+    \hrule
+\end{center}
+
+\setcounter{section}{2}
+
+\input{../shared.tex/soluciones_warning_box.tex}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\subsection{Ejercicio: Suma de dos vectores}
+
+Si quisiéramos utilizar un thread para calcular la suma de los dos vectores. ¿Cómo se calcularía el índice del thread?
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: El índice del thread se calcula teniendo en cuenta el tamaño del bloque, el número de bloque y
+    el número de thread.
+
+  \item \textbf{PISTA 2}: El índice del thread se mueve entre 0 y el tamaño del bloque menos uno. El número de bloque
+    se mueve entre 0 y el número de bloques menos uno.
+
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El índice del thread se calcula como:
+
+\begin{equation}
+  \texttt{idx = blockIdx.x * blockDim.x + threadIdx.x;}
+\end{equation}
+
+donde \texttt{blockIdx.x} es el número de bloque, \texttt{blockDim.x} es el tamaño del bloque y \texttt{threadIdx.x} es
+el número de thread dentro del bloque.
+
+\subsection{Ejercicio: Sumar elementos adyacentes}
+
+Supongamos ahora que queremos usar un thread para sumar dos elementos contiguos de un vector (por simplicidad podemos
+pensar que el vector y el de bloque tiene una cantidad par de elementos). ¿Cómo se calcularía el índice del thread?
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: El índice del thread tiene que ir de dos en dos. 
+
+  \item \textbf{PISTA 2}: Usá una hoja y un lápiz / lapicera para calcular el índice del thread a mano a ver cuál podría
+    ser.
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El índice del thread se calcula como: \texttt{idx = (blockIdx.x * blockDim.x + threadIdx.x) * 2;}.
+
+\subsection{Ejercicio: Calcular el tamaño de los threads}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: Primero hay que calcular cuántos bloques de threads serían necesarios.
+
+  \item \textbf{PISTA 1}: Dado que 1024 no es divisor de 8000 siempre vamos a tener más threads que elementos a
+    procesar. ¿Cómo se calcularía la cantidad de bloques sabiendo esa información?
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El total de threads es \textbf{8192}, que se calcula de la siguiente manera:
+
+\begin{equation}
+  numBlocks = \left\lceil \frac{8000}{1024} \right\rceil * 1024 = 8 * 1024 = 8192
+\end{equation} \\
+
+\subsection{Ejercicio: cudaMalloc (parte 1)}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: El primer argumento de \texttt{cudaMalloc} es el puntero a la memoria que queremos reservar.
+
+  \item \textbf{PISTA 2}: El segundo argumento de \texttt{cudaMalloc} es el tamaño de la memoria que queremos reservar.
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El segundo argumento de \texttt{cudaMalloc} es el tamaño de la memoria que queremos reservar, que se
+calcula como \footnote{\href{https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html}{CUDA
+documentation}}:
+
+\begin{equation}
+  \texttt{sizeof(int) * v}
+\end{equation}
+
+\subsection{Ejercicio: cudaMalloc (parte 2)}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: El primer argumento de \texttt{cudaMalloc} es el puntero a la memoria que queremos reservar.
+
+  \item \textbf{PISTA 2}: El segundo argumento de \texttt{cudaMalloc} es el tamaño de la memoria que queremos reservar.
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El primer argumento de \texttt{cudaMalloc} es el puntero a un puntero a la memoria que queremos
+reservar, ya que es la única forma en C para poder modificar el puntero (hacer una referencia).
+\footnote{\href{https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__MEMORY.html}{CUDA Documentation}}. La
+expresión sería entonces:
+
+\begin{equation}
+  \texttt{(void**)\&d\_A}
+\end{equation}
+
+\subsection{Ejercicio: Copia de memoria desde el \textit{host} al \textit{device}}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: La función \texttt{cudaMemcpy} tiene cuatro argumentos (pensá qué argumentos necesitarías para
+    poder copiar esa información)
+
+  \item \textbf{PISTA 2}: Los 3 primeros argumentos son fáciles de descubrir, porque son los punteros de la memoria de
+    origen, la memoria de destino y el tamaño de la memoria a copiar. Siendo que \texttt{cudaMemcpy} es una función que
+    funciona en ambos sentidos ¿cuál sería el cuarto argumento?.
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: La llamada a la API apropiada para esta copia de datos en CUDA es:
+
+\begin{equation}
+  \texttt{cudaMemcpy((void*)d\_A, (void*)h\_A, 3000, cudaMemcpyHostToDevice)}
+\end{equation}
+
+\subsection{Ejercicio: Manejo de errores}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: Las funciones de manejo de memoria de cuda devuelven siempre un tipo de error, por convención
+    es un tipo de datos especial que termina con el sufijo \texttt{\_t} ¿te acordás cuál es?
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: El tipo de error que devuelven las funciones de manejo de memoria de CUDA es \texttt{cudaError\_t}.
+Con lo cual la correcta definición de una variable (\texttt{err}) para recibir el error de las funciones de manejo de
+memoria de CUDA sería:
+
+\begin{equation}
+  \texttt{cudaError\_t err;}
+\end{equation}
+
+\subsection{Ejercicio: funciones en CUDA}
+
+\begin{enumerate}
+  \item \textbf{PISTA 1}: Las funciones de CUDA tienen modificadores para el host como para el device. ¿Te acordás cómo
+    se llaman?
+
+  \item \textbf{PISTA 2}: ¿Hay realmente que declararlas dos veces?
+\end{enumerate}
+
+\textbf{SOLUCIÓN}: Las funciones de CUDA tienen modificadores para el host como para el device, y estas son
+\texttt{\_\_host\_\_} y \texttt{\_\_device\_\_}. En realidad no es necesario declarar las funciones dos veces, ya que el
+compilador se encarga de generar el código para ambos dispositivos. Por ejemplo:
+
+\begin{equation}
+  \texttt{\_\_host\_\_ \_\_device\_\_ void foo(int *a) \{ ... \}}
+\end{equation}
+
+\input{../shared.tex/common_footers.tex}
+
+\end{document}
