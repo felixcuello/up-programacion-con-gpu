@@ -3,9 +3,9 @@ all: compile_latex clean
 .PHONY: all clean install_latex install
 
 current:
-	pdflatex -shell-escape 02.teorica___introduccion_a_CUDA.tex
-	biber 02.teorica___introduccion_a_CUDA
-	pdflatex -shell-escape 02.teorica___introduccion_a_CUDA.tex
+	pdflatex -shell-escape 02.practica___introduccion_a_CUDA.tex
+	pdflatex -shell-escape 02.soluciones__introduccion_a_CUDA.tex
+	open 02.practica___introduccion_a_CUDA.pdf 02.soluciones__introduccion_a_CUDA.pdf
 
 compile_latex:
 	@for file in *.tex; \
@@ -22,6 +22,10 @@ clean:
 		do \
 			find . -type f -name "*.$$extension" -delete; \
 		done;
+
+clean-all: clean
+	@echo "Cleaning up PDF files..."
+	@find . -type f -name "*.pdf" -delete
 
 install_latex: # Only for OSX
 	brew install --cask mactex

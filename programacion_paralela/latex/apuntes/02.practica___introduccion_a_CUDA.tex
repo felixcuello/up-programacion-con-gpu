@@ -1,0 +1,84 @@
+\input{../shared.tex/common_headers.tex}
+
+\begin{document}
+
+\begin{center}
+    \LARGE\textbf{Programación Paralela} \\
+    \Large{Práctica 02 - Introducción a CUDA} \\
+    \normalsize{\currentsemester, \currentyear} \\
+    \vspace{1em}
+    \hrule
+\end{center}
+
+\setcounter{section}{2}
+
+\input{../shared.tex/practica_warning_box.tex}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\subsection{Ejercicio: Suma de dos vectores}
+
+Si quisiéramos utilizar un thread para calcular la suma de los dos vectores. ¿Cómo se calcularía el índice del thread?
+
+\begin{enumerate}[label=\roman*.]
+  \item \texttt{idx = threadIdx.x + threadIdx.y;}
+  \item \texttt{idx = blockIdx.x + threadIdx.x;}
+  \item \texttt{idx = blockIdx.x * blockDim.x + threadIdx.x;}
+  \item \texttt{idx = blockIdx.x * threadIdx.x;}
+\end{enumerate}
+
+\subsection{Ejercicio: Sumar elementos adyacentes}
+
+Supongamos ahora que queremos usar un thread para sumar dos elementos contiguos de un vector (por simplicidad podemos
+suponer que el vector tiene un número par de elementos). ¿Cómo se calcularía el índice del thread?
+
+\begin{enumerate}[label=\roman*.]
+  \item \texttt{idx = blockIdx.x * blockDim.x + threadIdx.x + 2;}
+  \item \texttt{idx = blockIdx.x * threadIdx.x * 2;}
+  \item \texttt{idx = (blockIdx.x * blockDim.x + threadIdx.x) * 2;}
+  \item \texttt{idx = blockIdx.x * blockDim.x * 2 + threadIdx.x;}
+\end{enumerate}
+
+\subsection{Ejercicio: Calcular el tamaño de los threads}
+
+Para un programa que suma dos vectores, supongamos que el tamaño de los vectores es 8000 y que el tamaño del bloque de
+threads es 1024. El programador configura que el kernel lance la menor cantidad de bloques de threads para cubrir todos
+los elementos de salida. ¿Cuántos threads habrá corriendo en el \textit{grid}?
+
+\subsection{Ejercicio: cudaMalloc (parte 1)}
+
+Si queremos reservar un array de \texttt{v} elementos de tipo \texttt{int} en la memoria global del dispositivo CUDA,
+¿cuál sería la expresión apropiada para el segundo argumento de la llamada a \texttt{cudaMalloc}?
+
+\subsection{Ejercicio: cudaMalloc (parte 2)}
+
+Si queremos reservar un array de \texttt{n} elementos del tipo \texttt{float} y tenemos una variable \texttt{d\_A} que
+apunta a la memoria reservada, ¿cuál sería la expresión apropiada para el primer argumento de la llamada a
+\texttt{cudaMalloc}?
+
+% cudaMemcpy
+\subsection{Ejercicio: Copia de memoria desde el \textit{host} al \textit{device}}
+
+Si queremos copiar 3000 bytes de datos desde el array del host \texttt{h\_A} (donde \texttt{h\_A} es un puntero al
+elemento 0 del array de origen) al array del dispositivo \texttt{d\_A} (donde \texttt{d\_A} es un puntero al elemento 0
+del array de destino), ¿cuál sería la llamada a la API apropiada para esta copia de datos en CUDA?
+
+% Error handling
+\subsection{Ejercicio: Manejo de errores}
+
+¿Cómo declararías una variable \texttt{err} que pueda recibir apropiadamente el valor devuelto por una llamada a la API
+de CUDA en caso de error?
+
+\subsection{Ejercicio: funciones en CUDA}
+
+Estás trabajando en un proyecto de CUDA y uno de tus compañeros se uqeja de que CUDA es muy tedioso ya que hubo que
+declarar muchas funciones que se planean ejecutar tanto en el host como en el device dos veces, una como función de host
+y otra como función de device. ¿Cuál sería tu respuesta?
+
+\input{../shared.tex/common_footers.tex}
+
+\end{document}

@@ -30,12 +30,15 @@ Esto produjo que, la mayor parte de las aplicaciones, se vieran beneficiadas de 
 incrementar la velocidad de las propias aplicaciones donde, esencialmente, el mismo software funcionaba mucho más rápido
 a medida que se iban realizando mejoras en estas unidades de procesamiento secuenciales. Sin embargo esto muchas veces
 se lo conoce como \href{https://es.wikipedia.org/wiki/Escalabilidad#Escalabilidad_vertical}{escalabilidad vertical} ,
-donde se busca mejorar el rendimiento simplemente agregando más recursos. El problema con este enfoque es que
-eventualmente se llega a un límite de la cantidad de recursos que se pueden agregar y debemos encontrar otras formas de
-optimización.
+donde se busca mejorar el rendimiento simplemente agregando más recursos.
+
+El problema de la escalabilidad vertical es tiene un límite, ya que eventualmente se llega a un límite de la cantidad
+de recursos que se pueden agregar y debemos encontrar otras formas de optimización. Es aquí donde entra en juego la
+\textbf{escalabilidad horizontal} que se refiere a la capacidad de aumentar el rendimiento de un sistema al agregar más
+unidades de procesamiento (CPUs o GPUs) al sistema.
 
 Para ilustrar los conceptos básicos de la programación paralela y escalable, necesitamos elegir un lenguaje simple de
-programación que soporte paralelismo masivo. En este curso vamos a utilizar CUDA C para nuestros ejemplos y ejercicios,
+programación que soporte paralelismo masivo. En este curso vamos a utilizar CUDA para nuestros ejemplos y ejercicios,
 que no es más que una extensión del lenguaje de programación C con una nueva sintaxis e interfaces que hace que el
 software generado, no sólo pueda trabajar con sistemas que tengan CPUs, sino también con GPUs, como unidades de
 procesamiento masivamente paralelas. El modelo de programación CUDA fue desarrollado por
@@ -107,19 +110,20 @@ absoluto de $f(n)$ es menor o igual a $C$ por el valor absoluto de $g(n)$ para t
   \lvert g(n) \rvert \; (\forall \; n > n_0)
 \]
 
-Las diferentes complejidades algorítmicas deberán ser realizables; y por \textit{realizables} queremos decir que la
-capacidad de resolver las instancias deseadas de un problema estén dentro de nuestros recursos disponibles. En la
-práctica, la factibilidad es muy dependiente del contexto y no es particularmente \textit{portable} (portátil) entre
-diferentes problemas y situaciones. Un principio común se mantiene en casi todas las situaciones: \textbf{una tasa de
-crecimiento exponencial en el consumo de algún recurso limita la aplicación del uso de ese método a todas las
-instancias, excepto a las más pequeñas}. En otras palabras, si nuestros algoritmos tienden a tener complejidades
-exponenciales (o más) en el tamaño de la entrada, no importa cuántos recursos tengamos, no podremos resolver instancias
-grandes del problema. Por lo tanto, la factibilidad ha llegado a significar que la tasa de crecimiento del recurso está
-acotada por un una complejidad polinomial en el tamaño de la entrada. Esto nos da la noción común de que un problema
-tiene una solución secuencial factible sólo si tenemos un algoritmo de tiempo polinomial, es decir, sólo si cualquier
-instancia de tamaño $n$ del problema se puede resolver en tiempo $n^{O(1)}$. Aunque ampliamente reconocido como muy
-simplista, la dicotomía entre algoritmos polinomiales y no polinomiales ha demostrado ser un discriminador poderoso
-entre aquellos cálculos que son factibles en la práctica y aquellos que no lo son (\textcite{greenlaw1995}).
+Las complejidades algorítmicas nos indican si un algoritmo puede ser realizable o no; y por \textit{realizables}
+queremos decir que la capacidad de resolver las instancias deseadas de un problema estén dentro de nuestros recursos
+disponibles. En la práctica, la factibilidad es muy dependiente del contexto y no es particularmente \textit{portable}
+(portátil) entre diferentes problemas y situaciones. Un principio común se mantiene en casi todas las situaciones:
+\textbf{una tasa de crecimiento exponencial en el consumo de algún recurso limita la aplicación del uso de ese método a
+todas las instancias, excepto a las más pequeñas}. En otras palabras, si nuestros algoritmos tienden a tener
+complejidades exponenciales (o más) en el tamaño de la entrada, no importa cuántos recursos tengamos, no podremos
+resolver instancias grandes del problema. Por lo tanto, la factibilidad ha llegado a significar que la tasa de
+crecimiento del recurso está acotada por un una complejidad polinomial en el tamaño de la entrada. Esto nos da la noción
+común de que un problema tiene una solución secuencial factible sólo si tenemos un algoritmo de tiempo polinomial, es
+decir, sólo si cualquier instancia de tamaño $n$ del problema se puede resolver en tiempo $n^{O(1)}$. Aunque ampliamente
+reconocido como muy simplista, la dicotomía entre algoritmos polinomiales y no polinomiales ha demostrado ser un
+discriminador poderoso entre aquellos cálculos que son factibles en la práctica y aquellos que no lo son
+(\textcite{greenlaw1995}).
 
 Lógicamente hay problemas para los cuales no se han encontrado algoritmos polinomiales, por ejemplo, la factorización
 entera de un número muy grande es un problema que no puede resolverse en tiempo polinomial con las CPUs y GPUs actuales.
