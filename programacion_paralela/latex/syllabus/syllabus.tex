@@ -42,16 +42,30 @@ entender la forma en la que se deben abordar los problemas de programación para
 
 %  MODULO 01: INTRODUCCIÓN
 % --------------------------------------------------------------------------------------------------
-\subsection{Módulo 1: Introducción}
+\subsection{Módulo 1: Introducción a la Programación Paralela}
 
-**Límites del Paralelismo**: Complejidad polinomial, Clases P, Clases de Nick. **Introducción a la Programación
-Paralela** Evolución de los microprocesadores y la escalabilidad vertical. Importancia del paralelismo masivo y la
-elección de CUDA C. **Comparación entre CPUs y GPUs** Diferencias en optimización y rendimiento entre CPUs y GPUs. Casos
-de uso y limitaciones de cada tipo de procesador. **Modelo de Programación CUDA** Descripción del modelo de programación
-desarrollado por NVIDIA. Ventajas económicas y de rendimiento de utilizar GPUs con CUDA. **Paralelización de
-Aplicaciones** Beneficios y limitaciones de la paralelización. Ley de Amdahl y su impacto en el rendimiento de programas
-paralelos. **Desafíos en la Programación Paralela** Complejidad en el diseño de algoritmos paralelos. Sensibilidad a los
-datos de entrada y límites de acceso a memoria. **Modelos y Lenguajes de Programación Paralela** Descripción de
-lenguajes y APIs como OpenMP, MPI, OpenACC, OpenCL y CUDA.
-
+\textbf{Límites del Paralelismo}: Complejidad polinomial, Clases P, Clases de Nick. \textbf{Introducción a la
+Programación Paralela} Evolución de los microprocesadores y la escalabilidad vertical. Importancia del paralelismo
+masivo y la elección de CUDA C. \textbf{Comparación entre CPUs y GPUs} Diferencias en optimización y rendimiento entre
+CPUs y GPUs. Casos de uso y limitaciones de cada tipo de procesador. \textbf{Modelo de Programación CUDA} Descripción
+del modelo de programación desarrollado por NVIDIA. Ventajas económicas y de rendimiento de utilizar GPUs con CUDA.
+\textbf{Paralelización de Aplicaciones} Beneficios y limitaciones de la paralelización. Ley de Amdahl y su impacto en el
+rendimiento de programas paralelos. \textbf{Desafíos en la Programación Paralela} Complejidad en el diseño de algoritmos
+paralelos. Sensibilidad a los datos de entrada y límites de acceso a memoria.
 \end{document}
+
+
+%  MODULO 02: INTRODUCCIÓN A CUDA
+% --------------------------------------------------------------------------------------------------
+\subsection{Módulo 2: Introducción a CUDA}
+
+\textbf{Estructura de Programas CUDA}: Modelo de programación heterogéneo con código para CPU (host) y GPU (device).
+\textbf{Funciones Kernel y Threads}: Definición de funciones con \texttt{\_\_global\_\_}, \texttt{\_\_device\_\_} y
+\texttt{\_\_host\_\_}. Organización de threads en bloques y grids para ejecución paralela. \textbf{Gestión de Memoria en
+GPU}: Uso de \texttt{cudaMalloc}, \texttt{cudaFree} y \texttt{cudaMemcpy} para manejo de memoria global del device.
+Transferencia de datos entre host y device. \textbf{Optimización de Algoritmos}: Patrones comunes de paralelismo como
+reducción y loop-parallelism. \textbf{Aplicaciones Prácticas}: Implementación de operaciones vectoriales, procesamiento
+de imágenes y otros algoritmos paralelizables. \textbf{Manejo de Errores}: Mejores prácticas para detectar y manejar
+errores en código CUDA.
+
+
