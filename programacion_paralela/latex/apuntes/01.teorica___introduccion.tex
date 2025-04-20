@@ -12,8 +12,9 @@
 
 \vspace{1em}
 
+\setcounter{section}{1}
 
-\section*{Introducción}
+\subsection{Introducción}
 \label{sec:introduccion}
 
 En esta materia vamos a estudiar una técnica de programación llamada \textbf{programación paralela}, que nos permite
@@ -60,13 +61,15 @@ optimización para mover grandes cantidades de datos tanto \textit{in} como \tex
 Random Access Memory}) de la GPU porque fueron creadas para la industria de los juegos donde el
 \href{https://www.youtube.com/shorts/8wj3zVA03WQ}{\textit{frame buffering}} es un requerimiento crítico.
 
-\subsection*{Complejidad algorítmica}
+\subsection{Complejidad algorítmica}
 
 En materias anteriores (programación o algoritmos) se estudiaron algoritmos secuenciales y la importancia de la
 complejidad algorítmica. Esta complejidad algorítmica, es un parámetro con el cual podemos medir la eficiencia de un
 algoritmo en términos de la cantidad de recursos que utilizaar ya sea \textbf{tiempo} de CPU y o \textbf{espacio} de
 memoria requeridos para cada solución algorítmica. Esto nos permite comparar los diferentes algoritmos
 independientemente del lenguaje en que los vayamos a implementar.
+
+\subsubsection{Complejidad en Tiempo}
 
 Cuando diseñamos un algoritmo, es importante tener en cuenta la cantidad de recursos que se van a utilizar, tratando de
 estimar cuál será su complejidad en tiempo y en espacio de acuerdo a la solución que hayamos propuesto. Hay diferentes
@@ -131,7 +134,40 @@ Por eso es que la seguridad de muchos sistemas de encriptación se basan en ello
 de esta materia, hay algoritmos cuánticos que pueden resolver este problema en tiempo $O((\log n)^{O(1)})$
 (\cite{ekert1996}).
 
-\subsection*{¿Por qué no se utilizan GPUs para todo?}
+\subsubsection{Complejidad en Espacio}
+
+La complejidad en espacio es la cantidad de memoria requerida para resolver un algoritmo. Es una función que depende de
+la entrada del algoritmo y de la cantidad de memoria adicional que se necesite para resolver el problema. Como en el
+caso de la complejidad en tiempo, se utiliza la notación \textbf{Big O} para expresar la complejidad en espacio.
+La complejidad en espacio cuenta tanto la memoria utilizada estáticamente como la memoria utilizada dinámicamente, sin
+embargo, no se tiene en cuenta la memoria utilizada como \textit{input}. Por ejemplo, un algoritmo que cuenta la
+cantidad de números pares de un vector tiene una complejidad en tiempo de \textbf{$O(n)$} y una complejidad en espacio
+de \textbf{$O(1)$} ya que sólo necesita una variable para contar la cantidad de números pares.
+
+
+\begin{algorithm}
+\caption{Contar números pares}
+  \label{alg:countPares}
+  \begin{algorithmic}[1]
+    \Statex \textbf{Define:} countPares($a$)
+    \Statex \textbf{Input:} $a = \{a_0, a_1, a_2, \ldots, a_n\}$
+    \Statex \textbf{Initialization:} $count = 0$
+    \State \textbf{Output:} $count$
+
+    \For{$i = 0$ to $n$}
+      \If{$a_i \mod 2 = 0$}
+        \State $count = count + 1$
+      \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+La complejidad en espacio cuenta no sólo la memoria estática sino también la memoria dinámica (asignada en tiempo de
+ejecución). Por ejemplo, en el caso de contar números pares la complejidad en espacio es $O(1)$ ya que sólo se utilizó
+una variable para ir contando la cantidad de números pares, pero \textbf{no} se cuenta el vector $a$ ya que esa es el
+\textit{input} del problema.
+
+\subsection{¿Por qué no se utilizan GPUs para todo?}
 
 En la \ref{sec:introduccion} se mencionó que el \textit{ratio} de rendimiento entre una CPU y una GPU puede ser de 1:10
 (e incluso mayor), entonces una pregunta válida sería \textbf{¿por qué no se utilizan GPUs para todo?}. La respuesta a
@@ -161,7 +197,7 @@ habiendo más de 1000 millones de GPUs en el mundo que pueden ser utilizadas con
 desarrollo de aplicaciones paralelas, NVIDIA logra hacer que el desarrollo de software paralelo sea más accesible para
 todos.
 
-\section*{Desafíos en la programación paralela}
+\subsection{Desafíos en la programación paralela}
 
 Podríamos pensar entonces que la programación paralela puede ser una solución general para resolver todos los problemas
 de \textit{performance} y debería utilizarse siempre. Aunque como vimos con la ley de Amdahl, no todos los problemas son
@@ -174,7 +210,7 @@ de entrada, ya que esencialmente la paralelización se basa en el procesamiento 
 velocidad de acceso a memoria. Pero aún si salváramos estos problemas que son, méramente técnicos, nos encontraríamos
 con la pregunta más profunda: \textbf{¿todos los problemas son teóricamente paralelizables?}.
 
-\subsection*{Los límites de la programación paralela}
+\subsection{Los límites de la programación paralela}
 
 En la teoría de complejidad computacional, P es una clase \footnote{En matemáticas, una clase es una colección de
 conjuntos (u otros objetos matemáticos) que pueden ser definidos unívocamente por una propiedad compartida por todos los
@@ -208,7 +244,7 @@ no paralelizable" o "probablemente \textit{intrínsecamente secuencial}"}. \\
 Con lo cual, la respuesta a la pregunta de si todos los problemas son paralelizables es que \textbf{NO, no todos los
 problemas son paralelizables ya que hay ciertos problemas que son intrínsecamente secuenciales}.
 
-\section*{Modelos y Lenguajes de Programación Paralela}
+\subsection{Modelos y Lenguajes de Programación Paralela}
 
 En el pasado hubo muchos lenguajes de programación que fueron propuestos para abordar el problema de la programación
 paralela. Algunos de estos lenguajes son:
