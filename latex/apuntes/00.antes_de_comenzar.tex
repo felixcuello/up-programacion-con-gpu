@@ -1,0 +1,91 @@
+\input{../shared.tex/common_headers.tex}
+
+\begin{document}
+
+\begin{center}
+  \LARGE\textbf{Introducción a la Programación Paralela (CUDA)} \\
+  \Large{Teorica 00 - Antes de Comenzar} \\
+  \normalsize{\currentsemester, \currentyear} \\
+  \vspace{1em}
+  \hrule
+\end{center}
+
+\vspace{1em}
+
+\setcounter{section}{1}
+
+\subsection{Introducción}
+\label{sec:set_up}
+
+Antes de comenzar, vas a tener que configurar todo el entorno de trabajo para poder correr los ejemplos y hacer pruebas
+locales en tu computadora. Para ello vas a necesitar tener instalado un cliente de \href{git}{https://git-scm.com/} para
+poder clonar el repositorio de la materia y tener toda la información de la materia.
+
+Primero deberás clonar el repositorio
+\href{https://github.com/felixcuello/up-materias}{https://github.com/felixcuello/up-materias}. Allí encontrarás todo lo más
+actualizado de la materia inluyendo las teóricas, prácticas, soluciones y el entorno de desarrollo CUDA. Te recomendamos
+acceder a la URL y revisar los directorios para saber lo que está disponible.
+
+\subsection{Entorno de desarrollo}
+
+El entorno de desarrollo CUDA para la materia se puede utilizar:
+
+\begin{itemize}
+  \item \textbf{con Docker}: Recomendada, porque no requiere más que teneru \href{Docker
+    Desktop}{https://www.docker.com/products/docker-desktop/} o
+    \href{Colima}{https://github.com/abiosoft/colima), y poder utilizar el `Makefile` provisto por la materia (o sino
+    utilizar los comandos de docker manualmente}
+  \item \textbf{con instalación local}: Hacer una instalación local utilizando la guía oficial de \href{CUDA de
+    Nvidia}{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}.
+\end{itemize}
+
+\subsubsection{Instalación con Docker}
+
+Docker es una herramienta que permite crear, desplegar y ejecutar aplicaciones en contenedores. Un contenedor es una
+unidad estandarizada que aísla una aplicación y todas sus dependencias (sistema de archivos, bibliotecas, etc.) para que
+pueda ejecutarse de manera consistente en cualquier entorno. Esto significa que puedes ejecutar la misma aplicación en
+diferentes sistemas operativos y bibliotecas instaladas en el sistema \textit{host}.
+
+Además, el \textit{overhead} que genera Docker es mínimo ya que no hace una virtualización completa del sistema como
+puede ser una máquina virtual, sino que utiliza la arquitectura subyacente del sistema operativo. Esto permite que los
+contenedores sean más ligeros y rápidos, lógicamente, la desventaja es que al no virtualizar no se puede correr
+cualquier sistema operativo en el contenedor.
+
+Para correr el container de docker deberás instalar alguna de las alternativas para correr docker como son: \href{Docker
+Desktop}{https://www.docker.com/products/docker-desktop/} o \href{Colima}{https://github.com/abiosoft/colima} para
+correr el container de docker provisto por la cátedra.
+
+\subsubsection{Makefile y comandos de docker}
+
+Hemos provisto un archivo \texttt{Makefile} para poder levantar el container de docker con facilidad, sin embargo, es
+posible que tu sistema no tenga el comando \texttt{make} instalado. Y nuevamente hay dos opciones aquí. Por un lado se
+pueden correr los comandos de \texttt{docker} por separado, o se puede usar el comando \texttt{make} para correr las
+opciones disponibles en el \texttt{Makefile}.
+
+\textbf{\texttt{Makefile}}
+
+Si tu computadora tiene instalado \texttt{make} (o si instalaste \texttt{make}) estarás en condiciones de ejecutar
+\texttt{make} en la terminal.
+
+\begin{lstlisting}
+// Este header puede no estar disponible en tu sistema
+// en ese caso no lo incluyas, e inclui cada header a mano (como siempre)
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+  // solucion
+
+  return 0;
+}
+\end{lstlisting}
+
+\subsection{Instalación local}
+
+La instalación local no se explica porque ya está totalmente documentada en la documentación oficial de \href{CUDA de
+Nvidia}{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}.
+
+\input{../shared.tex/common_footers.tex}
+
+\end{document}
