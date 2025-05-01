@@ -1,3 +1,0 @@
-# Fundamentación
-
-# Objetivos

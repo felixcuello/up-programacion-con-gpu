@@ -4,7 +4,7 @@
 
 \begin{center}
   \LARGE\textbf{Introducción a la Programación Paralela (CUDA)} \\
-  \Large{Teorica 00 - Antes de Comenzar} \\
+  \Large{Guía 00 - Antes de Comenzar} \\
   \normalsize{\currentsemester, \currentyear} \\
   \vspace{1em}
   \hrule
@@ -17,43 +17,65 @@
 \subsection{Introducción}
 \label{sec:set_up}
 
-Antes de comenzar, vas a tener que configurar todo el entorno de trabajo para poder correr los ejemplos y hacer pruebas
-locales en tu computadora. Para ello vas a necesitar tener instalado un cliente de \href{git}{https://git-scm.com/} para
-poder clonar el repositorio de la materia y tener toda la información de la materia.
+\begin{tcolorbox}[colback=mint,colframe=mint!75!black,arc=0pt,outer arc=0pt]
+  \textbf{¡Bienvenidos!} \\
 
-Primero deberás clonar el repositorio
-\href{https://github.com/felixcuello/up-materias}{https://github.com/felixcuello/up-materias}. Allí encontrarás todo lo más
-actualizado de la materia inluyendo las teóricas, prácticas, soluciones y el entorno de desarrollo CUDA. Te recomendamos
-acceder a la URL y revisar los directorios para saber lo que está disponible.
+  Esta es una guía de instalación y configuración del entorno de trabajo para la materia, no es una guía de ejercicios o
+  teoría de la materia. Te va a ayudar a configurar y entender cómo funciona el entorno de desarrollo de la materia.
+
+  ¡Buena suerte!, no dudes en consultar cualquier duda que tengas.
+\end{tcolorbox}
+
+Para poder trabajar en la materia vas a necesitar un entorno de desarrollo con CUDA que te permita correr los ejemplos y
+ejercicios localmente en tu computadora. No hay una única forma de configurar el entorno de desarrollo, así que te vamos
+a dar opciones para que elijas la que más que te guste, te sea más familiar o cómoda.
+
+Toda la materia está en un repositorio git llamado
+\href{https://github.com/felixcuello/up-introduccion-a-la-programacion-paralela}{Introducción a la Programación
+Paralela}, que incluye todo el material incluyendo: \textbf{teóricas}, \textbf{prácticas}, \textbf{soluciones}, código
+de ejemplo y un entorno de desarrollo \textbf{Docker} para poder correr los ejemplos y ejercicios de la materia, si no
+vas a instalar CUDA localmente.
+
+\subsection{GIT}
+
+No es obligatorio, pero te va a facilitar mucho las cosas que tengas instalado un cliente de
+\href{https://git-scm.com/}{git} en tu computadora, sin embargo si no lo instalas tendrás que copiar algunos archivos
+del repositorio de forma manual. De todas formas \texttt{git} es una herramienta que seguramente ya utilices o
+utilizarás en el futuro, ya que es un sistema de control de versiones muy utilizado en la industria del software, que te
+permitirá conseguir las últimas actualizaciones de la materia, como para versionar código fuente. En
+\href{https://git-scm.com/downloads/guis}{este link} podrás encontrar una lista de clientes de git, aunque editores como
+\href{https://code.visualstudio.com/}{Visual Studio Code} ya tienen formas de integrar git en su interfaz, o sino podrás
+usar el cliente de git de consola.
 
 \subsection{Entorno de desarrollo}
 
-El entorno de desarrollo CUDA para la materia se puede utilizar:
+El entorno de desarrollo CUDA para la materia se puede instalar de dos formas diferentes:
 
 \begin{itemize}
-  \item \textbf{con Docker}: Recomendada, porque no requiere más que teneru \href{Docker
-    Desktop}{https://www.docker.com/products/docker-desktop/} o
-    \href{Colima}{https://github.com/abiosoft/colima), y poder utilizar el `Makefile` provisto por la materia (o sino
-    utilizar los comandos de docker manualmente}
-  \item \textbf{con instalación local}: Hacer una instalación local utilizando la guía oficial de \href{CUDA de
-    Nvidia}{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}.
+  \item \textbf{con Docker}: Recomendada, porque no requiere más que tener
+    \href{https://www.docker.com/products/docker-desktop/}{Docker Desktop} o
+    \href{https://github.com/abiosoft/colima}{Colima}
+  \item \textbf{con instalación local}: Hacer una instalación local utilizando la guía oficial de \href{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}{CUDA de
+    Nvidia}.
 \end{itemize}
 
 \subsubsection{Instalación con Docker}
 
-Docker es una herramienta que permite crear, desplegar y ejecutar aplicaciones en contenedores. Un contenedor es una
+Docker es una herramienta que te permite crear, desplegar y ejecutar aplicaciones en contenedores. Un contenedor es una
 unidad estandarizada que aísla una aplicación y todas sus dependencias (sistema de archivos, bibliotecas, etc.) para que
-pueda ejecutarse de manera consistente en cualquier entorno. Esto significa que puedes ejecutar la misma aplicación en
-diferentes sistemas operativos y bibliotecas instaladas en el sistema \textit{host}.
+pueda ejecutarse de manera consistente en cualquier entorno. Esto significa que, en teoría, se puede ejecutar la misma
+aplicación en diferentes sistemas operativos independientemente de las bibliotecas y herramientas que estén previamente
+instaladas en el sistema \textit{host}, ya que las dependencias de cada aplicación se instalan al construir el
+contenedor de docker.
 
-Además, el \textit{overhead} que genera Docker es mínimo ya que no hace una virtualización completa del sistema como
-puede ser una máquina virtual, sino que utiliza la arquitectura subyacente del sistema operativo. Esto permite que los
-contenedores sean más ligeros y rápidos, lógicamente, la desventaja es que al no virtualizar no se puede correr
-cualquier sistema operativo en el contenedor.
+Además, el \textit{overhead} de Docker para correr aplicaciones es mínimo ya que no hace una virtualización completa del
+sistema como puede ser una máquina virtual, sino que utiliza la arquitectura subyacente del sistema operativo. Esto
+permite que los contenedores sean más ligeros y rápidos, lógicamente, la desventaja es que al no virtualizar no se puede
+correr cualquier sistema operativo en el contenedor.
 
-Para correr el container de docker deberás instalar alguna de las alternativas para correr docker como son: \href{Docker
-Desktop}{https://www.docker.com/products/docker-desktop/} o \href{Colima}{https://github.com/abiosoft/colima} para
-correr el container de docker provisto por la cátedra.
+Para correr el container de docker deberás instalar alguna de las alternativas para correr docker como son:
+\href{https://www.docker.com/products/docker-desktop/}{Docker Desktop} o
+\href{https://github.com/abiosoft/colima}{Colima} para correr el container de docker provisto por la cátedra.
 
 \subsubsection{Makefile y comandos de docker}
 
@@ -62,29 +84,57 @@ posible que tu sistema no tenga el comando \texttt{make} instalado. Y nuevamente
 pueden correr los comandos de \texttt{docker} por separado, o se puede usar el comando \texttt{make} para correr las
 opciones disponibles en el \texttt{Makefile}.
 
+\textbf{\texttt{Dockerfile}}
+
+El archivo \texttt{Dockerfile} no es muy importante para la materia, pero es bueno que sepas qué es. El
+\texttt{Dockerfile} es un archivo de texto que contiene una serie de instrucciones para construir una imagen de
+docker. Allí se especifica qué comandos deben ejecutarse para construir cada container a partir de una imagen base.
+
 \textbf{\texttt{Makefile}}
 
-Si tu computadora tiene instalado \texttt{make} (o si instalaste \texttt{make}) estarás en condiciones de ejecutar
-\texttt{make} en la terminal.
+Adicionalmente también te recomendamos instalar el comando \texttt{make} para poder correr los comandos de docker ya que
+los comandos están escritos en un \texttt{Makefile} y no tendrás que escribirlos a mano.
+
+El archivo \texttt{Makefile} es un archivo que te permite ejecutar scripts de forma sencilla. En este caso, el
+\texttt{Makefile} contiene una serie de instrucciones para construir el container de docker y ejecutar los comandos
+necesarios para entrar al \href{https://linuxcommand.org/lc3_lts0010.php}{shell} del container.
+
+Si el comando \texttt{make} está instalado en tu computadora entonces podrás correr:
 
 \begin{lstlisting}
-// Este header puede no estar disponible en tu sistema
-// en ese caso no lo incluyas, e inclui cada header a mano (como siempre)
-#include <bits/stdc++.h>
+% make
 
-using namespace std;
+-------------------------------------------------------------------------
+         UP | Introduccion a la Programacion Paralela (CUDA)
+                       CUDA docker container
+-------------------------------------------------------------------------
 
-int main() {
-  // solucion
+ make build                             # Construye el container
+ make shell                             # Abre un shell en el container
 
-  return 0;
-}
 \end{lstlisting}
+
+Caso contrario deberás leer el archivo \texttt{Makefile} y correr los comandos de docker a mano. Por ejemplo, para
+construir el container de docker deberás correr (en Linux o MacOS):
+
+\begin{lstlisting}
+% docker run -ti -v $(PWD):/app --rm up-cuda /bin/bash
+\end{lstlisting}
+
+O si estás en Windows:
+
+\begin{lstlisting}
+% docker run -ti -v %cd%:/app --rm up-cuda /bin/bash
+\end{lstlisting}
+
+Si vas a correr los comandos manualmente deberás leer el archivo \texttt{Makefile} para ver los comandos disponibles y
+la sintaxis de cada uno.
 
 \subsection{Instalación local}
 
-La instalación local no se explica porque ya está totalmente documentada en la documentación oficial de \href{CUDA de
-Nvidia}{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}.
+Si tu preferencia es instalar todo localmente, deberás seguir la guía oficial de
+\href{https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html}{CUDA de NVIDIA}, ya que la instalación de CUDA
+depende del sistema operativo que estés utilizando.
 
 \input{../shared.tex/common_footers.tex}
 
