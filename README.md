@@ -1,4 +1,4 @@
-Programacion Paralela
+Programacion con GPUs
 =======================================================================================================================
 
 Organización del repositorio
