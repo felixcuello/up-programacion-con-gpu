@@ -1,7 +1,7 @@
 all:
 	@echo ""
 	@echo "------------------------------------------------------------------------------"
-	@echo "         💡 UP | Introducción a la Programación Paralela (CUDA) 💡"
+	@echo "                    💡 UP | Programación con GPUs) 💡"
 	@echo "                       🐳 CUDA docker container 🐳"
 	@echo "------------------------------------------------------------------------------"
 	@echo ""
