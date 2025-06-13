@@ -13,6 +13,7 @@
 \usepackage{caption}                                                    % For caption spacing
 \usepackage{enumitem}                                                   % To customize lists (items like i, ii, iii, iv)
 \usepackage{float}                                                      % To place figures where you want them
+\usepackage{fancyhdr}                                                   % To customize headers and footers
 \usepackage{graphicx}                                                   % To include images
 \usepackage{hyperref}                                                   % To include hyperlinks
 \usepackage{lipsum}                                                     % TODO: remove this
@@ -60,8 +61,36 @@
 \definecolor{red}{RGB}{255,202,202}
 
 % Variables globales para el documento
+\newcommand{\facultyname}{UP | Facultad de Ingeniería}
+\newcommand{\coursename}{Programación con GPUs}
 \newcommand{\currentsemester}{Segundo Semestre}
 \newcommand{\currentyear}{2025}
 
 % Esto es para poder agregar comentarios al código
 \newcommand{\comentario}[1]{\textcolor{gray}{// #1}}
+
+% Definir los encabezados y pies de página
+\pagestyle{fancy}
+\fancyhf{} % Borra encabezados y pies de página
+
+% Header configuration
+\fancyhead[R]{\includegraphics[height=50px]{../apuntes/images/logo_up.jpg}}
+\renewcommand{\headrulewidth}{0.4pt} % Agregar línea debajo del encabezado
+\setlength{\headheight}{50pt} % Ajustar la altura del encabezado
+
+% Footer configuration
+\fancyfoot[L]{\facultyname}
+\fancyfoot[C]{\thepage}
+\fancyfoot[R]{\coursename}
+\renewcommand{\footrulewidth}{0.4pt} % Agregar línea arriba del pie de página
+
+% Configuración de la primera página
+\fancypagestyle{firstpage}{
+  \fancyhf{} % Borra encabezados y pies de página
+  \fancyfoot[C]{\thepage} % Número de página centrado
+  \renewcommand{\headrulewidth}{0pt} % Sin línea en el encabezado
+  \renewcommand{\footrulewidth}{0.4pt} % Sin línea en el pie de página
+}
+
+% Configuración de la primera página
+\AtBeginDocument{\thispagestyle{firstpage}}
